@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,15 +19,15 @@ public class Workout {
     @GeneratedValue
     private Long id;
     private String name;
-    private Date date;
+    private LocalDate date;
     @ManyToMany
-    private List<Exercise> exercises;
+    private List<DoneExercise> exercises;
     private WorkoutStatus status;
     private double totalVolume;
     private String feeling;
 
 
-    public Workout(String name, Date date) {
+    public Workout(String name, LocalDate date) {
         this.name = name;
         this.date = date;
         this.totalVolume = 0;
