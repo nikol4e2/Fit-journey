@@ -5,7 +5,6 @@
     <title>Fit Journey</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        /* Add your custom styles here */
     </style>
 </head>
 <body>
@@ -27,20 +26,38 @@
                 <a class="nav-link" href="/contact">Contact</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/login">Login</a>
+                <div th:if="${user} == null">
+                    <a class="nav-link" href="/login">Login</a>
+                </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/register">Register</a>
+                <div th:if="${user} == null">
+                    <a class="nav-link" href="/register">Register</a>
+
+                </div>
+            </li>
+            <li class="nav-item">
+                <div th:if="${user} != null">
+                    <a class="nav-link" href="/addWorkout">Add workout</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <div th:if="${user} != null">
+                    <a class="nav-link" href="/profile">Profile</a>
+                </div>
             </li>
         </ul>
+
     </div>
+
 </nav>
 
 <div class="container mt-5">
     <h1>Welcome to  Fit Journey!</h1>
     <p>Your go-to destination for fitness and health.</p>
-    <!-- Add more content here -->
+
 </div>
+
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>

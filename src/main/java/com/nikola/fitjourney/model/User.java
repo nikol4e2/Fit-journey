@@ -1,10 +1,7 @@
 package com.nikola.fitjourney.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -25,7 +22,7 @@ public class User {
     private Date dateOfBirth;
     private double Weight;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Workout> workoutsDone;
 
 
