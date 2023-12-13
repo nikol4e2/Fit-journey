@@ -2,7 +2,7 @@ package com.nikola.fitjourney.service.impl;
 
 import com.nikola.fitjourney.model.DoneExercise;
 import com.nikola.fitjourney.model.Exercise;
-import com.nikola.fitjourney.model.Set;
+import com.nikola.fitjourney.model.ExerciseSet;
 import com.nikola.fitjourney.model.exceptions.ExerciseDoesNotExistException;
 import com.nikola.fitjourney.repository.jpa.DoneExerciseRepository;
 import com.nikola.fitjourney.service.DoneExerciseService;
@@ -25,7 +25,7 @@ public class DoneExerciseServiceImpl implements DoneExerciseService {
     }
 
     @Override
-    public void addSet(Long id, Set set) {
+    public void addSet(Long id, ExerciseSet set) {
         if(this.repository.findById(id).isPresent()) {
             DoneExercise doneExercise = repository.findById(id).get();
             doneExercise.getSets().add(set);

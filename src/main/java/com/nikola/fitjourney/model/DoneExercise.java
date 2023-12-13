@@ -17,7 +17,7 @@ public class DoneExercise {
     private Exercise exercise;
 
     @OneToMany
-    List<Set> sets;
+    List<ExerciseSet> sets;
 
     public DoneExercise(Exercise exercise) {
         this.exercise = exercise;

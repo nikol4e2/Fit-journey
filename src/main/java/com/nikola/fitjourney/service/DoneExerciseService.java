@@ -2,7 +2,7 @@ package com.nikola.fitjourney.service;
 
 import com.nikola.fitjourney.model.DoneExercise;
 import com.nikola.fitjourney.model.Exercise;
-import com.nikola.fitjourney.model.Set;
+import com.nikola.fitjourney.model.ExerciseSet;
 
 import java.util.Optional;
 
@@ -10,6 +10,6 @@ import java.util.Optional;
 public interface DoneExerciseService {
 
     Optional<DoneExercise> save(Exercise exercise);
-    void addSet(Long id,Set set);
+    void addSet(Long id, ExerciseSet set);
     void deleteById(Long id);
 }

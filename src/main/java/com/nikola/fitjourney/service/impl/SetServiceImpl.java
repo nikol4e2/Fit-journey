@@ -1,6 +1,6 @@
 package com.nikola.fitjourney.service.impl;
 
-import com.nikola.fitjourney.model.Set;
+import com.nikola.fitjourney.model.ExerciseSet;
 import com.nikola.fitjourney.repository.jpa.SetRepository;
 import com.nikola.fitjourney.service.SetService;
 import org.springframework.stereotype.Service;
@@ -17,8 +17,8 @@ public class SetServiceImpl implements SetService {
     }
 
     @Override
-    public Set save(int reps, Double weight) {
-        return setRepository.save(new Set(reps,weight));
+    public ExerciseSet save(int reps, Double weight) {
+        return setRepository.save(new ExerciseSet(reps,weight));
     }
 
     @Override
@@ -27,7 +27,7 @@ public class SetServiceImpl implements SetService {
     }
 
     @Override
-    public Optional<Set> findById(Long id) {
+    public Optional<ExerciseSet> findById(Long id) {
         return this.setRepository.findById(id);
     }
 }
