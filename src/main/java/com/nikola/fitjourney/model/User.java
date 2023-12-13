@@ -6,6 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,6 +21,7 @@ public class User {
     private String password;
     private String name;
     private String surname;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateOfBirth;
     private double Weight;
 
