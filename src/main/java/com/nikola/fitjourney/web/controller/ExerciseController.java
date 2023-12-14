@@ -32,7 +32,9 @@ public class ExerciseController {
     @PostMapping(path = "/add-exercise-DB")
     public String addExercise(@RequestParam String name, @RequestParam MuscleType muscleType)
     {
-        exerciseService.save(name,muscleType);
+
+        Exercise exercise=this.exerciseService.save(name,muscleType);
+
         return "redirect:/add-exercise-DB";
     }
 }

@@ -1,6 +1,9 @@
 package com.nikola.fitjourney.web.controller;
 
+import com.nikola.fitjourney.model.Exercise;
 import com.nikola.fitjourney.model.User;
+import com.nikola.fitjourney.model.enumerations.MuscleType;
+import com.nikola.fitjourney.service.ExerciseService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

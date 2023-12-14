@@ -12,7 +12,7 @@ public interface ExerciseService {
     List<Exercise> findAllByPrimaryMuscle(MuscleType muscleType);
     Optional<Exercise> findByName(String name);
     Optional<Exercise> findById(Long id);
-    Optional<Exercise> save(String name, MuscleType muscleType);
+    Exercise save(String name, MuscleType muscleType);
     void deleteById(Long id);
 
 }

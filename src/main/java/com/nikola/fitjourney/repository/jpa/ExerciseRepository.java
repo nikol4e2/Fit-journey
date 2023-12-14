@@ -15,4 +15,5 @@ public interface ExerciseRepository extends JpaRepository<Exercise,Long> {
     Optional<Exercise> findByName(String name);
     void deleteByName(String name);
     List<Exercise> findAllByPrimaryMuscle(MuscleType muscleType);
+
 }

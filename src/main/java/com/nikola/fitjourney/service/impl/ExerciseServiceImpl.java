@@ -39,8 +39,8 @@ public class ExerciseServiceImpl implements ExerciseService {
     }
 
     @Override
-    public Optional<Exercise> save(String name, MuscleType muscleType) {
-        return Optional.of(this.exerciseRepository.save(new Exercise(name,muscleType)));
+    public Exercise save(String name, MuscleType muscleType) {
+        return this.exerciseRepository.saveAndFlush(new Exercise(name,muscleType));
     }
 
     @Override

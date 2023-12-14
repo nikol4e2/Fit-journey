@@ -62,11 +62,11 @@ public class WorkoutController {
     @GetMapping(path = "/workout/{id}/add-exercise")
     public String getAddExercisePage(HttpServletRequest request, Model model, @PathVariable Long id)
     {
-
+        model.addAttribute("exercises",exerciseService.findAll());
         if(this.workoutService.findById(id).isPresent()) {
             Workout workout = workoutService.findById(id).get();
             model.addAttribute("workout",workout);
-            model.addAttribute("exercises",exerciseService.findAll());
+
             model.addAttribute("doneExercises",workout.getExercises());
             return "addExerciseToWorkout";
 
