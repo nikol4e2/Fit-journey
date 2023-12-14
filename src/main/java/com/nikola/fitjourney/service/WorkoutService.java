@@ -12,4 +12,5 @@ public interface WorkoutService {
     void addDoneExercise(Long workoutId, DoneExercise exercise);
     void deleteById(Long id);
     void deleteDoneExercise(Long workoutId,Long exerciseId);
+    Optional<Workout> findById(Long id);
 }

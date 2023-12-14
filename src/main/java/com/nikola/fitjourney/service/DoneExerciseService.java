@@ -12,4 +12,5 @@ public interface DoneExerciseService {
     Optional<DoneExercise> save(Exercise exercise);
     void addSet(Long id, ExerciseSet set);
     void deleteById(Long id);
+    Optional<DoneExercise> findById(Long id);
 }

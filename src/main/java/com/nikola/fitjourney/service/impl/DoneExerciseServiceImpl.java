@@ -34,6 +34,11 @@ public class DoneExerciseServiceImpl implements DoneExerciseService {
     }
 
     @Override
+    public Optional<DoneExercise> findById(Long id) {
+        return this.repository.findById(id);
+    }
+
+    @Override
     public void deleteById(Long id) {
         this.repository.deleteById(id);
     }

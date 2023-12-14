@@ -1,6 +1,7 @@
 package com.nikola.fitjourney.service.impl;
 
 import com.nikola.fitjourney.model.User;
+import com.nikola.fitjourney.model.Workout;
 import com.nikola.fitjourney.model.exceptions.InvalidUserCredentialsException;
 import com.nikola.fitjourney.model.exceptions.PasswordsDoNotMatchException;
 import com.nikola.fitjourney.model.exceptions.UserNameAlreadyExistsException;
@@ -47,5 +48,20 @@ public class AuthServiceImpl implements AuthService {
         User user=new User(username,password, name,  surname,  dateOfBirth,  weight);
         return this.userRepository.save(user);
 
+    }
+
+    @Override
+    public void addWorkoutToUser(String username, Workout workout) {
+        if(userRepository.findByUsername(username).isPresent())
+        {
+            User user=userRepository.findByUsername(username).get();
+            user.getWorkoutsDone().add(workout);
+            userRepository.save(user);
+        }
+    }
+
+    @Override
+    public User save(User user) {
+        return this.userRepository.save(user);
     }
 }

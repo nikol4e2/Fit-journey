@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AddExercise</title>
+</head>
+<body>
+    <div th:text="${workout.getName()}"></div>
+    <div th:if="${doneExercises} != null">
+        <ul>
+            <li th:each="doneExercise : ${doneExercises}">
+                <div>
+                    <th:block th:text="${doneExercise.name}"></th:block>
+                    <ul>
+                        <li th:each="set : ${doneExercise.sets}">
+                            <th:block th:text="${set.reps}"></th:block>
+                            <th:block th:text="${set.weight}"></th:block>
+                       </li>
+                        <li>
+                            <form action="dodadi set za exercise" method="POST">
+                                <input type="number" name="reps">
+                                <input type="number" name="weight" step="0.01">
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <form action="/workout/add-exercise">
+
+        <input type="hidden" th:value="${workout.getId()}" name="workoutId">
+        <select name="exerciseId" class="form-control">
+            <option th:if="${exercises} != null"
+                    th:each="exercise : ${exercises}"
+                    th:value="${exercise.getId()}"
+                    th:text="${exercise.getName()}">
+            </option>
+        </select>
+
+    </form>
+    <div th:text="${exercises}"></div>
+</body>
+</html>

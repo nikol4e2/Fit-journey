@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add exercise</title>
+</head>
+<body>
+    <form action="/add-exercise-DB">
+        <input type="text" name="name">
+        <select name="muscleType" class="form-control">
+            <option th:if="${muscleTypes} != null"
+                    th:each="muscle : ${muscleTypes}"
+                    th:value="${muscle}"
+                    th:text="${muscle}">
+            </option>
+        </select>
+
+    </form>
+</body>
+</html>

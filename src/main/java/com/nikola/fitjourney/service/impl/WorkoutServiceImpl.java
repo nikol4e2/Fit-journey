@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 public class WorkoutServiceImpl implements WorkoutService {
@@ -49,5 +50,10 @@ public class WorkoutServiceImpl implements WorkoutService {
             Workout workout=this.workoutRepository.findById(workoutId).get();
             workout.getExercises().removeIf(r->r.getId().equals(exerciseId));
         }
+    }
+
+    @Override
+    public Optional<Workout> findById(Long id) {
+        return this.workoutRepository.findById(id);
     }
 }
