@@ -1,10 +1,7 @@
 package com.nikola.fitjourney.model;
 
 import com.nikola.fitjourney.model.enumerations.WorkoutStatus;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -20,7 +17,7 @@ public class Workout {
     private Long id;
     private String name;
     private LocalDate date;
-    @ManyToMany
+    @ManyToMany(cascade= CascadeType.ALL)
     private List<DoneExercise> exercises;
     private WorkoutStatus status;
     private double totalVolume;

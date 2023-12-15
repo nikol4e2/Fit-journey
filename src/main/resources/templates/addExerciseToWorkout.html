@@ -10,7 +10,7 @@
         <ul>
             <li th:each="doneExercise : ${doneExercises}">
                 <div>
-                    <th:block th:text="${doneExercise.name}"></th:block>
+                    <th:block th:text="${doneExercise.getExercise().getName()}"></th:block>
                     <ul>
                         <li th:each="set : ${doneExercise.sets}">
                             <th:block th:text="${set.reps}"></th:block>
@@ -27,7 +27,7 @@
             </li>
         </ul>
     </div>
-    <form action="/workout/add-exercise">
+    <form action="/workout/add-exercise" method="post">
 
         <input type="hidden" th:value="${workout.getId()}" name="workoutId">
         <select name="exerciseId" class="form-control">
@@ -37,8 +37,8 @@
                     th:text="${exercise.getName()}">
             </option>
         </select>
-
+        <button type="submit">Add exercise</button>
     </form>
-    <div th:text="${exercises}"></div>
+
 </body>
 </html>

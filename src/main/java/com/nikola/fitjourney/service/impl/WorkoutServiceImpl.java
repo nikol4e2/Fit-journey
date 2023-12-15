@@ -34,6 +34,7 @@ public class WorkoutServiceImpl implements WorkoutService {
         {
             Workout workout=this.workoutRepository.findById(workoutId).get();
             workout.getExercises().add(exercise);
+            workoutRepository.save(workout);
         }
 
     }

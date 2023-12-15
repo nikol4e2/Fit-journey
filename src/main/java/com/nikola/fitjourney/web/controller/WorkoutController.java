@@ -1,9 +1,6 @@
 package com.nikola.fitjourney.web.controller;
 
-import com.nikola.fitjourney.model.Exercise;
-import com.nikola.fitjourney.model.ExerciseSet;
-import com.nikola.fitjourney.model.User;
-import com.nikola.fitjourney.model.Workout;
+import com.nikola.fitjourney.model.*;
 import com.nikola.fitjourney.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
@@ -73,6 +70,20 @@ public class WorkoutController {
         }
         return "redirect:/home";
     }
+
+    @PostMapping(path = "/workout/add-exercise")
+    public String addDoneExercise(@RequestParam Long exerciseId,@RequestParam Long workoutId)
+    {
+        if(this.workoutService.findById(workoutId).isPresent()) {
+            Workout workout = workoutService.findById(workoutId).get();
+            Exercise exercise=exerciseService.findById(exerciseId).get();
+            workoutService.addDoneExercise(workoutId,new DoneExercise(exercise));
+
+        }
+        return "redirect:/workout/"+workoutId+"/add-exercise";
+
+    }
+
 
 
 
