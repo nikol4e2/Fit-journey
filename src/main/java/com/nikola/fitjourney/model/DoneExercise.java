@@ -16,7 +16,7 @@ public class DoneExercise {
     @OneToOne
     private Exercise exercise;
 
-    @OneToMany
+    @OneToMany(cascade=CascadeType.ALL)
     List<ExerciseSet> sets;
 
     public DoneExercise(Exercise exercise) {

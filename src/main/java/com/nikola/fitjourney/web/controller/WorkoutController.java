@@ -98,4 +98,49 @@ public class WorkoutController {
         model.addAttribute("allExercises",exerciseService.findAll());
         return "redirect:/workout/"+newWorkout.getId()+"/add-exercise";
     }
+
+    @PostMapping(path = "/add-set")
+    public String addSet(@RequestParam Long workoutId,@RequestParam Long doneExerciseId,@RequestParam int reps,@RequestParam double weight)
+    {
+        if(this.doneExerciseService.findById(doneExerciseId).isPresent())
+        {
+            DoneExercise doneExercise=this.doneExerciseService.findById(doneExerciseId).get();
+            doneExercise.getSets().add(new ExerciseSet(reps,weight));
+            this.doneExerciseService.update(doneExercise);
+
+        }
+        return "redirect:/workout/"+workoutId+"/add-exercise";
+    }
+
+    @PostMapping(path = "/workout/complete-workout")
+    public String completeWorkout(@RequestParam Long workoutId,HttpServletRequest request,Model model)
+    {
+        if(this.workoutService.findById(workoutId).isPresent()) {
+            model.addAttribute("totalVolume",workoutService.calculateTotalVolume(workoutId)); //Might need to delete this code
+            request.getSession().setAttribute("totalVolume",workoutService.calculateTotalVolume(workoutId));
+            request.getSession().setAttribute("workout",workoutService.findById(workoutId).get());
+        }
+        return "redirect:/workout/"+workoutId+"/finalize";
+    }
+
+    @GetMapping(path = "/workout/{id}/finalize")
+    public String finalizeWorkout(@PathVariable Long id,HttpServletRequest request,Model model)
+    {
+        model.addAttribute("workout",(Workout)request.getSession().getAttribute("workout"));
+        model.addAttribute("totalVolume",request.getSession().getAttribute("totalVolume"));
+        return "finalizeWorkout";
+    }
+
+    @PostMapping(path = "/workout/finalize")
+    public String addComment(@RequestParam Long workoutId,@RequestParam String comment)
+    {
+        if(this.workoutService.findById(workoutId).isPresent()) {
+            Workout workout = workoutService.findById(workoutId).get();
+            workout.setFeeling(comment);
+            workoutService.update(workout);
+
+        }
+        return "redirect:/profile";
+    }
+
 }

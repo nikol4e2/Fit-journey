@@ -42,4 +42,9 @@ public class DoneExerciseServiceImpl implements DoneExerciseService {
     public void deleteById(Long id) {
         this.repository.deleteById(id);
     }
+
+    @Override
+    public Optional<DoneExercise> update(DoneExercise doneExercise) {
+        return Optional.of(this.repository.save(doneExercise));
+    }
 }

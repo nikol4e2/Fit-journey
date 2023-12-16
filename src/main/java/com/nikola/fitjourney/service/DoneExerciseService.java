@@ -13,4 +13,5 @@ public interface DoneExerciseService {
     void addSet(Long id, ExerciseSet set);
     void deleteById(Long id);
     Optional<DoneExercise> findById(Long id);
+    Optional<DoneExercise> update(DoneExercise doneExercise);
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -56,5 +57,29 @@ public class WorkoutServiceImpl implements WorkoutService {
     @Override
     public Optional<Workout> findById(Long id) {
         return this.workoutRepository.findById(id);
+    }
+
+    @Override
+    public double calculateTotalVolume(Long workoutId) {
+        Workout workout=this.workoutRepository.findById(workoutId).get();
+        double volume=0;
+        List<DoneExercise> exercises =workout.getExercises();
+        for(int i=0;i<exercises.size();i++)
+        {
+            for(int j=0;j<exercises.get(i).getSets().size();j++)
+            {
+                //find way to improve code
+                volume+=exercises.get(i).getSets().get(j).getReps()+exercises.get(i).getSets().get(j).getWeight();
+            }
+        }
+        workout.setTotalVolume(volume);
+        this.workoutRepository.save(workout);
+        return volume;
+    }
+
+
+    @Override
+    public Workout update(Workout workout) {
+        return this.workoutRepository.save(workout);
     }
 }

@@ -17,9 +17,14 @@
                             <th:block th:text="${set.weight}"></th:block>
                        </li>
                         <li>
-                            <form action="dodadi set za exercise" method="POST">
-                                <input type="number" name="reps">
-                                <input type="number" name="weight" step="0.01">
+                            <form action="/add-set" method="POST">
+                                <input type="hidden" th:value="${doneExercise.getId()}" name="doneExerciseId">
+                                <input type="hidden" th:value="${workout.getId()}" name="workoutId">
+                                <span>Reps:</span>
+                                <input type="number" name="reps" min="1">
+                                <span>Weight:</span>
+                                <input type="number" name="weight" step="0.1" min="1">
+                                <button type="submit">Add set</button>
                             </form>
                         </li>
                     </ul>
@@ -38,6 +43,11 @@
             </option>
         </select>
         <button type="submit">Add exercise</button>
+    </form>
+
+    <form action="/workout/complete-workout" method="POST">
+        <input type="hidden" th:value="${workout.getId()}" name="workoutId">
+        <button type="submit">Complete workout</button>
     </form>
 
 </body>
