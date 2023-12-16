@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Profile</title>
@@ -15,7 +15,7 @@
         <li th:each="workout : ${workouts}">
             <th:block th:text="${workout.name}"></th:block> <th:block th:text="${workout.date}"></th:block>
             <th:block>
-                <form th:method="DELETE"  th:action="@{'/workout/delete/{id}' (id=${workout.getId()})}">
+                <form method="post" th:action="@{'/workout/delete/{id}' (id=${workout.getId()})}">
                     <button type="submit">
 
                         <i>Delete</i>

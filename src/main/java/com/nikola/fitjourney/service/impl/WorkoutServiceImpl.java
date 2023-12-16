@@ -2,6 +2,7 @@ package com.nikola.fitjourney.service.impl;
 
 import com.nikola.fitjourney.model.DoneExercise;
 import com.nikola.fitjourney.model.Exercise;
+import com.nikola.fitjourney.model.User;
 import com.nikola.fitjourney.model.Workout;
 import com.nikola.fitjourney.repository.jpa.WorkoutRepository;
 import com.nikola.fitjourney.service.DoneExerciseService;
@@ -25,8 +26,8 @@ public class WorkoutServiceImpl implements WorkoutService {
     }
 
     @Override
-    public Workout save(String name) {
-        return this.workoutRepository.save(new Workout(name, LocalDate.now()));
+    public Workout save(String name, User user) {
+        return this.workoutRepository.save(new Workout(name, LocalDate.now(),user));
     }
 
     @Override

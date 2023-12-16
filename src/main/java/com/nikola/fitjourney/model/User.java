@@ -22,7 +22,7 @@ public class User {
     private Date dateOfBirth;
     private double Weight;
 
-    @OneToMany(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER,cascade=CascadeType.ALL,orphanRemoval = true,mappedBy = "user")
     private List<Workout> workoutsDone;
 
 

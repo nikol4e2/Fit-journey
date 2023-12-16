@@ -6,10 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 
@@ -46,9 +43,11 @@ public class WorkoutController {
     @PostMapping(path = "/add-workout")
     public String addWorkout(HttpServletRequest request,@RequestParam String name)
     {
-        Workout workout=this.workoutService.save(name);
+
+
         User user=(User) request.getSession().getAttribute("user");
-        user.getWorkoutsDone().add(new Workout(name, LocalDate.now()));
+        user.getWorkoutsDone().add(new Workout(name, LocalDate.now(),user));
+        Workout workout=this.workoutService.save(name,user);
         authService.save(user);
 
 
@@ -90,8 +89,9 @@ public class WorkoutController {
     @PostMapping(path = "/add-existing-workout")
     public String trackWorkout(HttpServletRequest request,Model model,@RequestParam long workoutId)
     {
+        User user=(User)request.getSession().getAttribute("user");
         Workout oldWorkout = this.workoutService.findById(workoutId).get();
-        Workout newWorkout=this.workoutService.save(oldWorkout.getName());
+        Workout newWorkout=this.workoutService.save(oldWorkout.getName(),user);
         newWorkout.getExercises().addAll(oldWorkout.getExercises());
         model.addAttribute("workout",newWorkout);
         model.addAttribute("doneExercises",newWorkout.getExercises());
@@ -138,6 +138,20 @@ public class WorkoutController {
             Workout workout = workoutService.findById(workoutId).get();
             workout.setFeeling(comment);
             workoutService.update(workout);
+
+        }
+        return "redirect:/profile";
+    }
+
+
+    @PostMapping(path = "/workout/delete/{id}")
+    public String deleteWorkout(@PathVariable Long id,HttpServletRequest request)
+    {
+        if(this.workoutService.findById(id).isPresent()) {
+            this.workoutService.deleteById(id);
+            User user=(User) request.getSession().getAttribute("user");
+            user.getWorkoutsDone().removeIf(r->r.getId().equals(id));
+            this.authService.save(user);
 
         }
         return "redirect:/profile";
