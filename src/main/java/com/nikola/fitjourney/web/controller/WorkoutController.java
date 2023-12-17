@@ -3,7 +3,6 @@ package com.nikola.fitjourney.web.controller;
 import com.nikola.fitjourney.model.*;
 import com.nikola.fitjourney.service.*;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -46,14 +45,16 @@ public class WorkoutController {
 
 
         User user=(User) request.getSession().getAttribute("user");
-        user.getWorkoutsDone().add(new Workout(name, LocalDate.now(),user));
+
+
         Workout workout=this.workoutService.save(name,user);
+        user.getWorkoutsDone().add(workout);
 
-        //authService.save(user);
+        authService.save(user);
 
 
 
-        return "redirect:/workout/"+workout.getId()+"/add-exercise";
+        return "redirect:/workout/"+workout.getWorkoutId()+"/add-exercise";
     }
 
     @GetMapping(path = "/workout/{id}/add-exercise")
@@ -97,7 +98,7 @@ public class WorkoutController {
         model.addAttribute("workout",newWorkout);
         model.addAttribute("doneExercises",newWorkout.getExercises());
         model.addAttribute("allExercises",exerciseService.findAll());
-        return "redirect:/workout/"+newWorkout.getId()+"/add-exercise";
+        return "redirect:/workout/"+newWorkout.getWorkoutId()+"/add-exercise";
     }
 
     @PostMapping(path = "/add-set")
@@ -151,7 +152,7 @@ public class WorkoutController {
         if(this.workoutService.findById(id).isPresent()) {
             this.workoutService.deleteById(id);
             User user=(User) request.getSession().getAttribute("user");
-            user.getWorkoutsDone().removeIf(r->r.getId().equals(id));
+            user.getWorkoutsDone().removeIf(r->r.getWorkoutId().equals(id));
             this.authService.save(user);
 
         }

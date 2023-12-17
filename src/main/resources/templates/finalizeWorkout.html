@@ -9,7 +9,7 @@
   <div th:text="${workout.getName()}"></div>
   <div th:text="${totalVolume}"></div>
   <form action="/workout/finalize" method="POST">
-      <input type="hidden" name="workoutId" th:value="${workout.getId()}">
+      <input type="hidden" name="workoutId" th:value="${workout.getWorkoutId()}">
       <span>Add comments/ how did you feel?</span>
       <input type="text" name="comment" >
       <button type="submit">Finalize Workout</button>

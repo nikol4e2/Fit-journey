@@ -3,6 +3,8 @@ package com.nikola.fitjourney.model;
 import com.nikola.fitjourney.model.enumerations.WorkoutStatus;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 
 import java.time.LocalDate;
@@ -10,13 +12,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 
 public class Workout {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="workoutId", unique = true, nullable = false)
+    private Long workoutId;
     private String name;
     private LocalDate date;
     @ManyToMany(cascade= CascadeType.ALL)
@@ -41,4 +45,6 @@ public class Workout {
 
     public Workout() {
     }
+
+
 }

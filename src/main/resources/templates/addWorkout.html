@@ -16,14 +16,15 @@
     <select name="workoutId" class="form-control">
         <option th:if="${workouts} != null"
                 th:each="workout : ${workouts}"
-                th:text="${workout.getName()}"
-                th:value="${workout.getId()}">
+                th:text="${workout.name}"
+                th:value="${workout.getWorkoutId()}"
+                >
         </option>
 
     </select>
 
     <button type="submit">Track workout</button>
 </form>
-<th:block  th:each="workout : ${workouts}" th:text="${workout.id}"></th:block>
+
 </body>
 </html>

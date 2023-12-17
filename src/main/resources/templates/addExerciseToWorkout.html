@@ -34,7 +34,7 @@
     </div>
     <form action="/workout/add-exercise" method="post">
 
-        <input type="hidden" th:value="${workout.getId()}" name="workoutId">
+        <input type="hidden" th:value="${workout.getWorkoutId()}" name="workoutId">
         <select name="exerciseId" class="form-control">
             <option th:if="${exercises} != null"
                     th:each="exercise : ${exercises}"
@@ -46,7 +46,7 @@
     </form>
 
     <form action="/workout/complete-workout" method="POST">
-        <input type="hidden" th:value="${workout.getId()}" name="workoutId">
+        <input type="hidden" th:value="${workout.getWorkoutId()}" name="workoutId">
         <button type="submit">Complete workout</button>
     </form>
 
