@@ -48,7 +48,8 @@ public class WorkoutController {
         User user=(User) request.getSession().getAttribute("user");
         user.getWorkoutsDone().add(new Workout(name, LocalDate.now(),user));
         Workout workout=this.workoutService.save(name,user);
-        authService.save(user);
+
+        //authService.save(user);
 
 
 

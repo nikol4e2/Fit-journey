@@ -10,10 +10,10 @@ import java.util.List;
 @Entity
 public class DoneExercise {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     private Exercise exercise;
 
     @OneToMany(cascade=CascadeType.ALL)
