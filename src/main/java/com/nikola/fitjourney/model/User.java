@@ -3,6 +3,9 @@ package com.nikola.fitjourney.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.ArrayList;
@@ -22,7 +25,9 @@ public class User {
     private Date dateOfBirth;
     private double Weight;
 
-    @OneToMany(fetch = FetchType.EAGER,cascade=CascadeType.ALL,orphanRemoval = true,mappedBy = "user")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "user_workouts", referencedColumnName="username")
+    @OneToMany(fetch = FetchType.EAGER,cascade=CascadeType.REMOVE,orphanRemoval = true)
     private List<Workout> workoutsDone;
 
 

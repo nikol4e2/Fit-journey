@@ -19,7 +19,7 @@
                         <li>
                             <form action="/add-set" method="POST">
                                 <input type="hidden" th:value="${doneExercise.getId()}" name="doneExerciseId">
-                                <input type="hidden" th:value="${workout.getId()}" name="workoutId">
+                                <input type="hidden" th:value="${workout.getWorkoutId()}" name="workoutId">
                                 <span>Reps:</span>
                                 <input type="number" name="reps" min="1">
                                 <span>Weight:</span>

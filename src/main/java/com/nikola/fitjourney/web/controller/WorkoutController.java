@@ -96,7 +96,7 @@ public class WorkoutController {
         Workout newWorkout=this.workoutService.save(oldWorkout.getName(),user);
         newWorkout.getExercises().addAll(oldWorkout.getExercises());
         model.addAttribute("workout",newWorkout);
-        model.addAttribute("doneExercises",newWorkout.getExercises());
+        model.addAttribute("doneExercises",oldWorkout.getExercises());
         model.addAttribute("allExercises",exerciseService.findAll());
         return "redirect:/workout/"+newWorkout.getWorkoutId()+"/add-exercise";
     }

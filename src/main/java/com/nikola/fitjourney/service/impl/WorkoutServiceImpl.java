@@ -27,7 +27,8 @@ public class WorkoutServiceImpl implements WorkoutService {
 
     @Override
     public Workout save(String name, User user) {
-        return this.workoutRepository.save(new Workout(name, LocalDate.now(),user));
+       // return this.workoutRepository.save(new Workout(name, LocalDate.now(),user));
+        return this.workoutRepository.save(new Workout(name, LocalDate.now()));
     }
 
     @Override

@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.OnDelete;
 
 import java.time.LocalDate;
@@ -15,10 +16,9 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-
 public class Workout {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="workoutId", unique = true, nullable = false)
     private Long workoutId;
     private String name;
@@ -28,18 +28,18 @@ public class Workout {
     private WorkoutStatus status;
     private double totalVolume;
     private String feeling;
-    @ManyToOne
-    private User user;
+ //   @ManyToOne(cascade = CascadeType.REMOVE)
+  //  private User user;
 
 
-    public Workout(String name, LocalDate date,User user) {
+    public Workout(String name, LocalDate date) {
         this.name = name;
         this.date = date;
         this.totalVolume = 0;
         this.feeling = "";
         this.status=WorkoutStatus.STARTED;
         this.exercises=new ArrayList<>();
-        this.user=user;
+   //     this.user=user;
 
     }
 
