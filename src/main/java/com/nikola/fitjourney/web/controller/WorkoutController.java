@@ -90,36 +90,9 @@ public class WorkoutController {
 
 
 
-    @PostMapping(path = "/add-existing-workout")
-    public String trackWorkout(HttpServletRequest request,Model model,@RequestParam long workoutId)
-    {
-        User user=(User)request.getSession().getAttribute("user");
-        Workout oldWorkout = this.workoutService.findById(workoutId).get();
-        Workout newWorkout=this.workoutService.save(oldWorkout.getName(),user);
-        newWorkout.getExercises().addAll(oldWorkout.getExercises());
-        model.addAttribute("isPreviousWorkout",true);
-        model.addAttribute("workout",newWorkout);
-        model.addAttribute("previoslyDoneExercises",oldWorkout.getExercises());
-        model.addAttribute("allExercises",exerciseService.findAll());
-        request.getSession().setAttribute("previoslyDoneExercises",oldWorkout.getExercises());
-        return "redirect:/existingworkout/"+newWorkout.getWorkoutId()+"/add-exercise";
-    }
 
-    @GetMapping(path = "/existingworkout/{id}/add-exercise")
-    public String trackWorkout(HttpServletRequest request,@PathVariable Long id,Model model)
-    {
-        model.addAttribute("exercises",exerciseService.findAll());
-        if(this.workoutService.findById(id).isPresent()) {
-            Workout workout = workoutService.findById(id).get();
-            model.addAttribute("isPreviousWorkout",true);
-            model.addAttribute("workout",workout);
-            model.addAttribute("previoslyDoneExercises",request.getSession().getAttribute("previoslyDoneExercises"));
-            model.addAttribute("doneExercises",workout.getExercises());
-            return "addExerciseToWorkout";
 
-        }
-        return "redirect:/home";
-    }
+
 
     @PostMapping(path = "/add-set")
     public String addSet(@RequestParam Long workoutId,@RequestParam Long doneExerciseId,@RequestParam int reps,@RequestParam double weight)
@@ -170,9 +143,10 @@ public class WorkoutController {
     public String deleteWorkout(@PathVariable Long id,HttpServletRequest request)
     {
         if(this.workoutService.findById(id).isPresent()) {
-            this.workoutService.deleteById(id);
             User user=(User) request.getSession().getAttribute("user");
             user.getWorkoutsDone().removeIf(r->r.getWorkoutId().equals(id));
+            this.workoutService.deleteById(id);
+
             this.authService.save(user);
 
         }

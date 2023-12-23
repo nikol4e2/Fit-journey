@@ -66,6 +66,9 @@
     <form action="/workout/add-exercise" method="post">
 
         <input type="hidden" th:value="${workout.getWorkoutId()}" name="workoutId">
+        <div th:if="${isPreviousWorkout} != null">
+            <input type="hidden" th:value="true" name="isExisting">
+        </div>
         <select name="exerciseId" class="form-control">
             <option th:if="${exercises} != null"
                     th:each="exercise : ${exercises}"
