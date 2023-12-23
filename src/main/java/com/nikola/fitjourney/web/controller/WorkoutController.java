@@ -78,7 +78,9 @@ public class WorkoutController {
         if(this.workoutService.findById(workoutId).isPresent()) {
             Workout workout = workoutService.findById(workoutId).get();
             Exercise exercise=exerciseService.findById(exerciseId).get();
-            workoutService.addDoneExercise(workoutId,new DoneExercise(exercise));
+            DoneExercise doneExercise=new DoneExercise(exercise);
+            doneExerciseService.save(doneExercise);
+            workoutService.addDoneExercise(workoutId,doneExercise);
 
         }
         return "redirect:/workout/"+workoutId+"/add-exercise";
@@ -95,10 +97,28 @@ public class WorkoutController {
         Workout oldWorkout = this.workoutService.findById(workoutId).get();
         Workout newWorkout=this.workoutService.save(oldWorkout.getName(),user);
         newWorkout.getExercises().addAll(oldWorkout.getExercises());
+        model.addAttribute("isPreviousWorkout",true);
         model.addAttribute("workout",newWorkout);
-        model.addAttribute("doneExercises",oldWorkout.getExercises());
+        model.addAttribute("previoslyDoneExercises",oldWorkout.getExercises());
         model.addAttribute("allExercises",exerciseService.findAll());
-        return "redirect:/workout/"+newWorkout.getWorkoutId()+"/add-exercise";
+        request.getSession().setAttribute("previoslyDoneExercises",oldWorkout.getExercises());
+        return "redirect:/existingworkout/"+newWorkout.getWorkoutId()+"/add-exercise";
+    }
+
+    @GetMapping(path = "/existingworkout/{id}/add-exercise")
+    public String trackWorkout(HttpServletRequest request,@PathVariable Long id,Model model)
+    {
+        model.addAttribute("exercises",exerciseService.findAll());
+        if(this.workoutService.findById(id).isPresent()) {
+            Workout workout = workoutService.findById(id).get();
+            model.addAttribute("isPreviousWorkout",true);
+            model.addAttribute("workout",workout);
+            model.addAttribute("previoslyDoneExercises",request.getSession().getAttribute("previoslyDoneExercises"));
+            model.addAttribute("doneExercises",workout.getExercises());
+            return "addExerciseToWorkout";
+
+        }
+        return "redirect:/home";
     }
 
     @PostMapping(path = "/add-set")

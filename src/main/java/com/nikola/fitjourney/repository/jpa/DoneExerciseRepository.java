@@ -10,6 +10,6 @@ import java.util.Optional;
 @Repository
 public interface DoneExerciseRepository extends JpaRepository<DoneExercise,Long> {
 
-    Optional<DoneExercise> save(Exercise exercise);
+
 
 }

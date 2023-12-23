@@ -20,8 +20,8 @@ public class DoneExerciseServiceImpl implements DoneExerciseService {
     }
 
     @Override
-    public Optional<DoneExercise> save(Exercise exercise) {
-        return repository.save(exercise);
+    public Optional<DoneExercise> save(DoneExercise doneExercise) {
+        return Optional.of(repository.save(doneExercise));
     }
 
     @Override

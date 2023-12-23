@@ -16,13 +16,14 @@ public class DoneExercise {
     @ManyToOne
     private Exercise exercise;
 
-    @OneToMany(cascade=CascadeType.ALL)
+    @OneToMany(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
     List<ExerciseSet> sets;
 
     public DoneExercise(Exercise exercise) {
         this.exercise = exercise;
         this.sets=new ArrayList<>();
     }
+
 
     public DoneExercise() {
     }

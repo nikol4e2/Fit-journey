@@ -2,15 +2,13 @@ package com.nikola.fitjourney.model;
 
 import com.nikola.fitjourney.model.enumerations.WorkoutStatus;
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -22,9 +20,11 @@ public class Workout {
     @Column(name="workoutId", unique = true, nullable = false)
     private Long workoutId;
     private String name;
-    private LocalDate date;
-    @ManyToMany(cascade= CascadeType.ALL)
+    private LocalDate workoutDate;
+
+    @OneToMany(cascade= CascadeType.ALL,fetch = FetchType.EAGER)
     private List<DoneExercise> exercises;
+
     private WorkoutStatus status;
     private double totalVolume;
     private String feeling;
@@ -32,9 +32,9 @@ public class Workout {
   //  private User user;
 
 
-    public Workout(String name, LocalDate date) {
+    public Workout(String name, LocalDate workoutDate) {
         this.name = name;
-        this.date = date;
+        this.workoutDate = workoutDate;
         this.totalVolume = 0;
         this.feeling = "";
         this.status=WorkoutStatus.STARTED;

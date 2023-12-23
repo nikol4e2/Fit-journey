@@ -15,8 +15,13 @@
 
     <ul>
         <li th:each="workout : ${workouts}">
-            <th:block th:text="${workout.name}"></th:block> <th:block th:text="${workout.date}"></th:block>
+            <th:block th:text="${workout.name}"></th:block> <th:block th:text="${workout.workoutDate}"></th:block>
             <th:block th:text="${workout.workoutId}"></th:block>
+            <ul>
+                <li th:each="exercise : ${workout.getExercises()}">
+                    <th:block th:text="${exercise.getId()}"></th:block>
+                </li>
+            </ul>
             <th:block>
                 <form method="post" th:action="@{'/workout/delete/{id}' (id=${workout.getWorkoutId()})}">
                     <button type="submit">

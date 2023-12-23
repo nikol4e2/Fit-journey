@@ -26,8 +26,9 @@ public class User {
     private double Weight;
 
     @OnDelete(action = OnDeleteAction.CASCADE)
+
     @JoinColumn(name = "user_workouts", referencedColumnName="username")
-    @OneToMany(fetch = FetchType.EAGER,cascade=CascadeType.REMOVE,orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER,cascade=CascadeType.ALL,orphanRemoval = true)
     private List<Workout> workoutsDone;
 
 

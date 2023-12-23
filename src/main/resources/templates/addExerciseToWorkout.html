@@ -6,6 +6,37 @@
 </head>
 <body>
     <div th:text="${workout.getName()}"></div>
+    <th:block th:text="${isPreviousWorkout}"></th:block>
+    <div th:if="${isPreviousWorkout} != null">
+        <div>is previous workout</div>
+        <div th:if="${previoslyDoneExercises} != null">
+            <div>Its not null</div>
+            <ul>
+                <li th:each="doneExercise : ${previoslyDoneExercises}">
+                    <div>
+                        <th:block th:text="${doneExercise.getExercise().getName()}"></th:block>
+                        <ul>
+                            <li th:each="set : ${doneExercise.sets}">
+                                <th:block th:text="${set.reps}"></th:block>
+                                <th:block th:text="${set.weight}"></th:block>
+                            </li>
+                            <li th:each="set : ${doneExercise.sets}">
+                                <form action="/add-set" method="POST">
+                                    <input type="hidden" th:value="${doneExercise.getId()}" name="doneExerciseId" >
+                                    <input type="hidden" th:value="${workout.getWorkoutId()}" name="workoutId">
+                                    <span>Reps:</span>
+                                    <input type="number" name="reps" min="1" th:placeholder="${set.getReps()}">
+                                    <span>Weight:</span>
+                                    <input type="number" name="weight" step="0.1" min="1" th:placeholder="${set.getWeight()}">
+                                    <button type="submit">Add set</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
     <div th:if="${doneExercises} != null">
         <ul>
             <li th:each="doneExercise : ${doneExercises}">
