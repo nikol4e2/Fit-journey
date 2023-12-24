@@ -127,12 +127,15 @@ public class WorkoutController {
     }
 
     @PostMapping(path = "/workout/finalize")
-    public String addComment(@RequestParam Long workoutId,@RequestParam String comment)
+    public String addComment(HttpServletRequest request,@RequestParam Long workoutId,@RequestParam String comment)
     {
-        if(this.workoutService.findById(workoutId).isPresent()) {
+        User user=(User)request.getSession().getAttribute("user");
+        if(this.workoutService.findById(workoutId).isPresent() && user!=null ) {
             Workout workout = workoutService.findById(workoutId).get();
             workout.setFeeling(comment);
             workoutService.update(workout);
+            user.getWorkoutsDone().add(workout);
+            this.authService.save(user);
 
         }
         return "redirect:/profile";

@@ -27,7 +27,7 @@ public class ProfileController {
         }
         User user = (User) request.getSession().getAttribute("user");
         model.addAttribute("user",user);
-        model.addAttribute("workouts",workoutService.findAll());
+        model.addAttribute("workouts",user.getWorkoutsDone());
 
         return "profile";
 
