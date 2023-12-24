@@ -1,9 +1,6 @@
 package com.nikola.fitjourney.web.controller;
 
-import com.nikola.fitjourney.model.DoneExercise;
-import com.nikola.fitjourney.model.Exercise;
-import com.nikola.fitjourney.model.User;
-import com.nikola.fitjourney.model.Workout;
+import com.nikola.fitjourney.model.*;
 import com.nikola.fitjourney.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
@@ -66,6 +63,7 @@ public class ExistWorkoutController {
           newDoneExercises.add(new DoneExercise(oldWorkout.getExercises().get(i).getExercise()));
         }
         newWorkout.getExercises().addAll(newDoneExercises);
+        this.workoutService.update(newWorkout);
         request.getSession().setAttribute("previoslyDoneExercises",oldWorkout.getExercises());
         return "redirect:/existingworkout/"+newWorkout.getWorkoutId()+"/add-exercise";
     }
@@ -81,6 +79,26 @@ public class ExistWorkoutController {
 
         }
         return "redirect:/existingworkout/" + workoutId + "/add-exercise";
+    }
+
+    @PostMapping(path = "/add-set-existing")
+    public String addSet(HttpServletRequest request,@RequestParam Long workoutId,@RequestParam Long doneExerciseId,@RequestParam int reps,@RequestParam double weight,@RequestParam(required = false) Long setId)
+    {
+        if(this.doneExerciseService.findById(doneExerciseId).isPresent())
+        {
+            DoneExercise doneExercise=this.doneExerciseService.findById(doneExerciseId).get();
+            doneExercise.getSets().add(new ExerciseSet(reps,weight));
+            this.doneExerciseService.update(doneExercise);
+            if(setId !=null) {
+                List<DoneExercise> oldExercises = (List<DoneExercise>) request.getSession().getAttribute("previoslyDoneExercises");
+                for (int i = 0; i < oldExercises.size(); i++) {
+                    oldExercises.get(i).getSets().removeIf(r -> r.getId().equals(setId));
+                }
+                request.removeAttribute("previoslyDoneExercises");
+                request.getSession().setAttribute("previoslyDoneExercises", oldExercises);
+            }
+        }
+        return "redirect:/existingworkout/"+workoutId+"/add-exercise";
     }
 
 }

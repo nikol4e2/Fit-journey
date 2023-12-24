@@ -11,6 +11,41 @@
     <ul>
         <li th:each="doneExercise : ${doneExercises}">
             <th:block th:text="${doneExercise.getExercise().getName()}"></th:block>
+            <ul>
+                <li th:each="set : ${doneExercise.sets}">
+                    <th:block th:text="${set.reps}"></th:block>
+                    <th:block th:text="${set.weight}"></th:block>
+                </li>
+                <li th:each="previous: ${previoslyDoneExercises}">
+                    <th:block th:if="${doneExercise.getExercise().getName()} == ${previous.getExercise().getName()}">
+                        <ul>
+                            <li th:each="set : ${previous.sets}">
+                                <form action="/add-set-existing" method="POST">
+                                    <input type="hidden" th:value="${doneExercise.getId()}" name="doneExerciseId" >
+                                    <input type="hidden" th:value="${workout.getWorkoutId()}" name="workoutId">
+                                    <input type="hidden" th:value="${set.getId()}" name="setId">
+                                    <span>Reps:</span>
+                                    <input type="number" name="reps" min="1" th:placeholder="${set.getReps()}">
+                                    <span>Weight:</span>
+                                    <input type="number" name="weight" step="0.1" min="1" th:placeholder="${set.getWeight()}">
+                                    <button type="submit">Add set</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </th:block>
+                </li>
+                <li>
+                    <form action="/add-set-existing" method="POST">
+                        <input type="hidden" th:value="${doneExercise.getId()}" name="doneExerciseId">
+                        <input type="hidden" th:value="${workout.getWorkoutId()}" name="workoutId">
+                        <span>Reps:</span>
+                        <input type="number" name="reps" min="1">
+                        <span>Weight:</span>
+                        <input type="number" name="weight" step="0.1" min="1">
+                        <button type="submit">Add set</button>
+                    </form>
+                </li>
+            </ul>
         </li>
     </ul>
 </div>
